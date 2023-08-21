@@ -1,0 +1,119 @@
+.myServShowOrHide {
+    height: 0;
+    overflow: hidden;
+    /* border: 1px solid transparent; */
+    display: block;
+    transition: height .5s ease-in-out;
+}
+
+.myServHaver:hover + .myServShowOrHide {
+    height: 260px;
+    /* border: 1px solid #999; */
+}
+
+
+.myServShowOrHide:hover {
+    height: 260px;
+    /* border: 1px solid #999; */
+    overflow: initial;
+}
+
+
+@media (max-width: 939px) {
+    .myServShowOrHide {
+        overflow: hidden !important;
+    }
+    .myServHaver:hover + .myServShowOrHide {
+        height: 340px;
+        /* border: 1px solid #999; */
+    }
+    
+    .myServShowOrHide:hover {
+        height: 340px;
+        /* border: 1px solid #999; */
+        overflow: initial;
+    }
+  }
+
+
+.businesShow {
+    height: 0;
+    overflow: hidden;
+    transition: all .5s ease-in-out;
+}
+
+.busines:hover + .businesShow {
+    height: 165px;
+    padding: 8px;
+    z-index: 50;
+}
+
+.businesShow:hover {
+    height: 165px;
+    padding: 8px;
+    z-index: 50;
+}
+
+
+/***************************/
+.myAutresShowOrHide {
+    height: 0;
+    overflow: hidden;
+    /* border: 1px solid transparent; */
+    display: block;
+    transition: height .5s ease-in-out;
+}
+
+.myAutresHaver:hover + .myAutresShowOrHide {
+    height: 100px;
+    /* border: 1px solid #999; */
+}
+
+
+.myAutresShowOrHide:hover {
+    height: 100px;
+    /* border: 1px solid #999; */
+    overflow: initial;
+}
+
+
+
+
+/***************************/
+.myDestinationsShowOrHide {
+    height: 0;
+    overflow: hidden;
+    /* border: 1px solid transparent; */
+    display: block;
+    transition: height .5s ease-in-out;
+}
+
+.myDestinationsHaver:hover + .myDestinationsShowOrHide {
+    height: 150px;
+    /* border: 1px solid #999; */
+}
+
+
+.myDestinationsShowOrHide:hover {
+    height: 150px;
+    /* border: 1px solid #999; */
+    overflow: initial;
+}
+
+
+/***************************/
+.evenShow {
+    height: 0;
+    overflow: hidden;
+    transition: all .5s ease-in-out;
+}
+
+.evens:hover + .evenShow {
+    height: 165px;
+    padding: 8px;
+}
+
+.evenShow:hover {
+    height: 165px;
+    padding: 8px;
+}

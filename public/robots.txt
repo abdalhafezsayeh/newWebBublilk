@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://kirotravel.com/
+
+# Sitemaps
+Sitemap: https://kirotravel.com/sitemap.xml
