@@ -59,10 +59,10 @@ function ShuttelForm() {
   };
 
   return (
-    <div className="w-full h-full relative">
+    <div className="w-full h-full relative ">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full h-full p-3 flex flex-col text-text gap-6 pt-12"
+        className="w-full h-full p-3 flex flex-col text-text gap-8 justify-center animate__animated animate__fadeIn"
       >
         {/* Round Trip */}
         <div className="flex gap-4">
@@ -90,7 +90,7 @@ function ShuttelForm() {
         </div>
 
         {/* from & to */}
-        <div className="flex justify-between items-center gap-3 w-full">
+        <div className="flex justify-between items-center gap-2 w-full">
           <div className="flex flex-col gap-2">
             <label>From</label>
             <AutoCompletee
@@ -104,7 +104,7 @@ function ShuttelForm() {
           </div>
 
           <span>
-            <HiArrowsRightLeft size={28} />
+            <HiArrowsRightLeft size={22} />
           </span>
           <div className="flex flex-col gap-2">
             <label>To</label>
@@ -120,7 +120,7 @@ function ShuttelForm() {
         </div>
 
         {/* depart & passengers */}
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-11">
           <div className="flex flex-col gap-2">
             <label>Depart</label>
             <input
@@ -143,7 +143,7 @@ function ShuttelForm() {
         </div>
 
         {/* Luggages & promo code */}
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-11">
           <div
             className="flex flex-col gap-2"
             onClick={()=> handelShowRightContent("luggegs")}
@@ -176,7 +176,7 @@ function ShuttelForm() {
         </div>
       </form>
 
-      <div className={`absolute top-0 duration-300 ${showRightContent ? "left-[110%]" : "left-0"} -z-10 w-full h-full bg-white rounded flex flex-col items-center pt-12 p-3`}>
+      <div className={`absolute top-0 duration-300 ${showRightContent ? "left-[110%]" : "left-0"} -z-10 w-[90%] lg:w-full h-full bg-white rounded flex flex-col items-center pt-12 p-3`}>
         <span
           className={`absolute top-[14%] right-full border-[15px] border-transparent border-r-white duration-500`}
         />

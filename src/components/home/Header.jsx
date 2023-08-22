@@ -5,6 +5,7 @@ import { TbBus } from "react-icons/tb";
 import { BsTaxiFrontFill } from "react-icons/bs";
 import { FaShuttleVan } from "react-icons/fa";
 import ShuttelForm from "./ShuttelForm";
+import TaxiForm from "./TaxiForm";
 
 const images = [
   "/home/hero-1.png",
@@ -18,9 +19,12 @@ const Header = () => {
   const [index , setIndex ] = useState(0)
 
   useEffect(()=>{
-    let interval = setInterval(() => {
-      setIndex(prev => prev == 3 ? 0 : prev + 1)
-    }, 5000);
+    let interval
+    if(process.env.NODE_ENV !== "development"){
+      interval = setInterval(() => {
+        setIndex(prev => prev == 3 ? 0 : prev + 1)
+      }, 5000);
+    }
 
     return()=>{
       clearInterval(interval)
@@ -34,7 +38,7 @@ const Header = () => {
   return (
     <div className="w-full overflow-hidden relative">
       <div
-        className="min-h-screen h-screen max-h-max flex duration-700"
+        className="min-h-fit h-[600px] max-h-max flex duration-700"
         style={{
           transform:`translate3d(-${index * 100}%, 0px, 0px)`
         }}
@@ -51,9 +55,9 @@ const Header = () => {
 
       {/* start form */}
       <Container className="absolute top-1/2 z-10 -translate-y-1/2 left-1/2 -translate-x-1/2 h-[90%] flex gap-3">
-        <div className="w-[35%] min-w-[450px] grid grid-cols-[22%_auto] gap-2 bg-white rounded ">
-          
-          <div className="w-full flex flex-col justify-around items-center gap-px relative">
+        <div className="w-[57%] lg:w-[40%] lg:min-w-[450px] grid grid-cols-[20%_auto] lg:grid-cols-[22%_auto] gap-2 bg-white rounded ">
+          {/* choose form */}
+          <div className="w-full z-[2] flex flex-col justify-around items-center gap-px relative">
             <button onClick={()=> handelType("shuttel")} className="rounded-tl flex flex-col items-center justify-center bg-main w-full gap-2 text-white font-medium tracking-wider h-[calc(100%/3)]">
               <TbBus size={30}/>
               Shuttle
@@ -66,12 +70,13 @@ const Header = () => {
               <FaShuttleVan size={30} style={{transform:"rotateY(180deg)"}}/>
               Hire Car
             </button>
-            <span className={`absolute ${travelType == "shuttel" ? "top-[15%]" : travelType == "hireCar" ? "top-[80%]" : "top-1/2 -translate-y-1/2"} left-full border-[15px] border-transparent border-l-main duration-500`} />
+            <span className={`absolute z-[2] ${travelType == "shuttel" ? "top-[15%]" : travelType == "hireCar" ? "top-[80%]" : "top-1/2 -translate-y-1/2"} left-full border-[15px] border-transparent border-l-main duration-500`} />
           </div>
 
           {/* form */}
           <div className="w-full">
-            <ShuttelForm />
+            {travelType == "shuttel" && <ShuttelForm />}
+            {travelType == "taxi" && <TaxiForm />}
           </div>
         </div>
       </Container>

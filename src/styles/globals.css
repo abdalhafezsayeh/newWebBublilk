@@ -150,3 +150,7 @@ body {
   width: 100%;
   padding: 20px;
 }
+.slide_one {
+  flex: 0 0 250px;
+  width: 250px !important;
+}
