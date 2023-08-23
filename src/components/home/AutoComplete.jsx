@@ -43,7 +43,7 @@ function AutoCompletee({placeholder , register}) {
         >
           <div className="flex justify-between items-center relative ">
             <input
-              className="w-full py-1 text-[14px] bg-white border-b border-b-text focus:ring-0 outline-none focus:outline-none"
+              className="w-full py-1 text-[14px] bg-transparent focus:ring-0 outline-none focus:outline-none"
               type="text"
               placeholder={placeholder}
               required

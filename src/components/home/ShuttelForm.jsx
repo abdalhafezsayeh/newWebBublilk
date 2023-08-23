@@ -91,8 +91,8 @@ function ShuttelForm() {
 
         {/* from & to */}
         <div className="flex justify-between items-center gap-2 w-full">
-          <div className="flex flex-col gap-2">
-            <label>From</label>
+          <div className="flex gap-2 relative border border-[#B4B4B4] py-2 px-2 rounded-md">
+            <label className="absolute left-3 top-[calc(0px-12px)] px-1 bg-white">From</label>
             <AutoCompletee
               placeholder=""
               register={{
@@ -106,8 +106,8 @@ function ShuttelForm() {
           <span>
             <HiArrowsRightLeft size={22} />
           </span>
-          <div className="flex flex-col gap-2">
-            <label>To</label>
+          <div className="flex gap-2 relative border border-[#B4B4B4] py-2 px-2 rounded-md">
+            <label className="absolute left-3 top-[calc(0px-12px)] px-1 bg-white">To</label>
             <AutoCompletee
               placeholder=""
               register={{
@@ -121,17 +121,17 @@ function ShuttelForm() {
 
         {/* depart & passengers */}
         <div className="grid grid-cols-2 gap-11">
-          <div className="flex flex-col gap-2">
-            <label>Depart</label>
+          <div className="flex gap-2 relative border border-[#B4B4B4] py-2 px-2 rounded-md">
+            <label className="absolute left-3 top-[calc(0px-12px)] px-1 bg-white">Depart</label>
             <input
               type="date"
-              className="w-full bg-transparent border-b border-b-text py-1 focus:ring-0 focus:outline-none"
+              className="w-full bg-transparent py-1 focus:ring-0 focus:outline-none"
             />
           </div>
 
-          <div className="flex flex-col gap-2" onClick={()=> handelShowRightContent("passengers")}>
-            <label>Passengers</label>
-            <div className="w-full bg-transparent border-b border-b-text py-1 flex gap-1 items-center">
+          <div className="flex gap-2 relative border border-[#B4B4B4] py-2 px-2 rounded-md" onClick={()=> handelShowRightContent("passengers")}>
+            <label className="absolute left-3 top-[calc(0px-12px)] px-1 bg-white">Passengers</label>
+            <div className="w-full bg-transparent py-1 flex gap-1 items-center">
               <FaUser size={25} />
               <input
                 disabled
@@ -144,24 +144,23 @@ function ShuttelForm() {
 
         {/* Luggages & promo code */}
         <div className="grid grid-cols-2 gap-11">
-          <div
-            className="flex flex-col gap-2"
+          <div className="flex gap-2 relative border border-[#B4B4B4] py-2 px-2 rounded-md"
             onClick={()=> handelShowRightContent("luggegs")}
           >
-            <label>Luggage&apos;s</label>
+            <label className="absolute left-3 top-[calc(0px-12px)] px-1 bg-white">Luggage&apos;s</label>
             <input
               type="number"
               disabled
-              className="w-full bg-transparent border-b border-b-text py-1 focus:ring-0 focus:outline-none"
+              className="w-full bg-transparent py-1 focus:ring-0 focus:outline-none"
             />
           </div>
 
-          <div className="flex flex-col gap-2">
-            <label>Promo Code</label>
+          <div className="flex gap-2 relative border border-[#B4B4B4] py-2 px-2 rounded-md">
+            <label className="absolute left-3 top-[calc(0px-12px)] px-1 bg-white">Promo Code</label>
             <input
               {...register("promCode")}
               type="text"
-              className="w-full bg-transparent border-b border-b-text py-1 focus:ring-0 focus:outline-none"
+              className="w-full bg-transparent py-1 focus:ring-0 focus:outline-none"
             />
           </div>
         </div>

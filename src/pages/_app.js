@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import "@/styles/Navbar.css";
 import "@/styles/conclergerle.css";
 import "@/styles/loading.css";
+import 'react-calendar/dist/Calendar.css';
 import Navbarr from "@/components/Navbarr";
 import "animate.css";
 import "react-phone-number-input/style.css";
