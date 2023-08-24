@@ -107,7 +107,7 @@ const Index = () => {
       {/* Start Bar Search  */}
       <div className='mt-7'>
         <Container>
-          <div className={`border-[1px] border-[#B4B4B4] px-5 rounded-lg ${modifySearch ? 'h-[50  0px]' : 'h-12' } duration-300 overflow-hidden `}>
+          <div className={`border-[1px] border-[#B4B4B4] px-5 rounded-lg ${modifySearch ? 'h-[500px]' : 'h-12' } duration-300 overflow-hidden `}>
 
             <div className={`border-b-[1px] ${modifySearch ? ' border-[#B4B4B4]' : 'border-transparent'} duration-500 flex justify-between items-start`}>
 
