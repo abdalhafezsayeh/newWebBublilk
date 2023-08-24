@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-function PassengerDetailsModal({handelClose = ()=>{}}) {
+function PassengerDetailsModal({handelClose = ()=>{}, setNumberTheScreen}) {
   const { register , handleSubmit } = useForm({
     defaultValues:{
       room_num:"",
@@ -45,7 +45,7 @@ function PassengerDetailsModal({handelClose = ()=>{}}) {
             className="w-full p-2 placeholder:text-text-secoundry bg-transparent border border-line rounded-md focus:ring-0 focus:outline-none"
           />
 
-          <button type="submit" 
+          <button onClick={() => setNumberTheScreen(3)} type="submit" 
 
             className="w-full flex justify-center items-center py-2 text-white bg-secondary border border-secondary rounded-md hover:bg-transparent hover:text-secondary">
             Next

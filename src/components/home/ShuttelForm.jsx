@@ -5,8 +5,13 @@ import AutoCompletee from "./AutoComplete";
 import { HiArrowsRightLeft, HiShoppingBag } from "react-icons/hi2";
 import { FaUser , FaChildren } from "react-icons/fa";
 import { GiSchoolBag } from "react-icons/gi";
+import { useRouter } from "next/router";
+
 
 function ShuttelForm() {
+
+  const router = useRouter()
+
   const [ showRightContent , setShowRightContent ] = useState(false)
   const [ typeRightContent , setTypeRightContent ] = useState("luggegs")
 
@@ -56,6 +61,8 @@ function ShuttelForm() {
 
   const onSubmit = (values) => {
     console.log(values);
+    router.push('/resultShuttle')
+    
   };
 
   return (

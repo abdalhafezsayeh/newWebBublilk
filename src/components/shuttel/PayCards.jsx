@@ -3,6 +3,7 @@ import Container from '../globalComponents/Container'
 
 function PayCards() {
   return (
+    <>
     <Container className="flex flex-col gap-8 py-10">
       <div className="flex flex-wrap gap-6 items-center">
         {/* booking card */}
@@ -81,6 +82,12 @@ function PayCards() {
         </div>
       </div>
     </Container>
+
+
+      <span className='absolute right-10 bottom-2 my-7'>
+        <button onClick={() => setNumberTheScreen(2)} className='w-fit px-14 h-[35px] bg-secondary rounded-2xl text-white'>checkout</button>
+      </span>
+    </>
   )
 }
 

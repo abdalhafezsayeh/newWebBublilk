@@ -159,3 +159,18 @@ body {
   flex: 0 0 200px;
   width: 200px !important;
 }
+
+.customScroll::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  background-color: #F5F5F5;
+}
+.customScroll_shuttle::-webkit-scrollbar {
+  width: 4px;
+  height: 7px;
+  background-color: #999;
+}
+.customScroll::-webkit-scrollbar-thumb {
+  background-color: #000000;   
+}
+

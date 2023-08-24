@@ -2,8 +2,9 @@
 import React from 'react'
 import Container from '../globalComponents/Container'
 
-function LuggageDetails() {
+function LuggageDetails({setNumberTheScreen}) {
   return (
+    <>
     <Container className="flex flex-col gap-8 py-10">
       
       {/* luggage */}
@@ -56,6 +57,11 @@ function LuggageDetails() {
 
       <hr className='w-full h-px bg-line' />
     </Container>
+
+      <span className='absolute right-10 bottom-2 my-7'>
+        <button onClick={() => setNumberTheScreen(2)} className='w-fit px-14 h-[35px] bg-secondary rounded-2xl text-white'>Confirm</button>
+      </span>
+    </>
   )
 }
 
