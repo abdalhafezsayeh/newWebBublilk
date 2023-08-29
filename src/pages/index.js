@@ -1,5 +1,4 @@
 import Header from "@/components/home/Header";
-import AllYourNeedsFulfiled from "@/components/home/AllYourNeedsFulfiled";
 import HowItWorks from "@/components/home/HowItWorks";
 import PageHead from "@/components/globalComponents/PageHead";
 import MapInMobile from "@/components/pwa/MapInMobile";
@@ -10,6 +9,7 @@ import BoardingScreen from "@/components/pwa/BoardingScreen";
 import WelcomeScreen from "@/components/pwa/WelcomeScreen";
 import OurCustomerFeedback from "@/components/home/OurCustomerFeedback";
 import SliderOne from "@/components/home/SliderOne";
+import AdsSlider from "@/components/home/AdsSlider";
 
 export default function Home() {
   const {reqId} = useContext(UserData)
@@ -59,7 +59,7 @@ export default function Home() {
       <div className="hidden md:block">
         <Header />
         <SliderOne />
-        {/* <AllYourNeedsFulfiled /> */}
+        <AdsSlider />
         <HowItWorks />
         <OurCustomerFeedback />
       </div>

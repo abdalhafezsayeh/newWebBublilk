@@ -17,10 +17,14 @@ module.exports = {
           text:{
             DEFAULT:'#1E1E1E',
             light:'#535353',
-            secoundry:"#757373"
+            secoundry:"#757373",
+            blue:"#060047"
           },
           line:{
             DEFAULT:'#B4B4B4',
+          },
+          star:{
+            DEFAULT:'#FFC831',
           },
           backGroundNav:{
             DEFAULT:'rgb(0 0 0 / 86%)'

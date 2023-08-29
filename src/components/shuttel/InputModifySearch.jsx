@@ -67,7 +67,7 @@ const handelLugges = (e, type, value) => {
 }
 
   return (
-    <div className='h-[430px] relative'>
+    <div className='h-[420px] relative'>
       {/* Way The Shuttl */}
       <div className='my-2'>
         {typeWay.map((item, index) => (

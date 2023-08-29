@@ -174,3 +174,15 @@ body {
   background-color: #000000;   
 }
 
+/* swiper */
+.swiper-pagination-bullet-active{
+  background: #00BFB3 !important;
+}
+.swiper-button-prev, .swiper-button-next{
+  width: 25px !important;
+  height: 25px !important;
+  bottom: 0 !important;
+  top: calc(100% - 12.5px) !important;
+  color:#00BFB3 !important;
+  z-index: 15 !important;
+}

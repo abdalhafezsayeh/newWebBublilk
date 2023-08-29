@@ -41,6 +41,7 @@
     "react-phone-number-input": "^3.2.23",
     "react-slide-button": "^2.0.0",
     "react-star-ratings": "^2.3.0",
+    "swiper": "^10.2.0",
     "yup": "^1.0.2"
   },
   "devDependencies": {
