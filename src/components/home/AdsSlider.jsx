@@ -1,10 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCoverflow, Pagination , Navigation } from "swiper/modules";
+import { EffectCoverflow, Pagination , Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import "swiper/css/autoplay";
 import { BsStarFill } from "react-icons/bs";
 import AxiosInstance from "@/helper/AxiosInstance";
 
@@ -35,9 +36,10 @@ function AdsSlider() {
           slideShadows: true,
         }}
         pagination={true}
-        modules={[EffectCoverflow, Pagination , Navigation]}
+        modules={[EffectCoverflow, Pagination , Navigation, Autoplay]}
         onSwiper={(swiper) => console.log(swiper)}
         onSlideChange={() => console.log('slide change')}
+        autoplay
         className="mySwiper w-full min-h-fit !pb-[50px]"
       >
         {adsData.map((item , index)=>(

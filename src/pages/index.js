@@ -8,7 +8,7 @@ import { UserData } from "@/context/userContext";
 import BoardingScreen from "@/components/pwa/BoardingScreen";
 import WelcomeScreen from "@/components/pwa/WelcomeScreen";
 import OurCustomerFeedback from "@/components/home/OurCustomerFeedback";
-import SliderOne from "@/components/home/SliderOne";
+import FixedTrips from "@/components/home/FixedTrips";
 import AdsSlider from "@/components/home/AdsSlider";
 
 export default function Home() {
@@ -58,7 +58,7 @@ export default function Home() {
       </>}
       <div className="hidden md:block">
         <Header />
-        <SliderOne />
+        <FixedTrips />
         <AdsSlider />
         <HowItWorks />
         <OurCustomerFeedback />
