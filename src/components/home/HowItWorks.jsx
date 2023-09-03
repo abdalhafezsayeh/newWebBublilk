@@ -33,7 +33,7 @@ function HowItWorks() {
 
         </div>
       </Container>
-      <button className="w-[180px] h-[36px] bg-secondary rounded-lg text-white m-auto block mt-10">Post a trip request</button>
+      <a href="#addRequest" className="w-[180px] h-[36px] bg-secondary rounded-lg text-white m-auto flex justify-center items-center mt-10">Post a trip request</a>
     </div>
   );
 }

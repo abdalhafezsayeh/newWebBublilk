@@ -171,12 +171,12 @@ function SignUp({classInDesktop, hiddenElement}) {
           className={` ${swapBetween == 1 ? "flex" : 'hidden'} min-w-full animate__animated flex-col justify-center gap-y-5 items-center`}
         >
           <div className="">
-            <p className="text-main text-lg sm:text-[20px] font-[600] mb-3">
+            <p className="text-mobileMain md:text-main text-lg sm:text-[20px] font-[600] mb-3">
               For Your better experience
             </p>
             <p className="text-[#1E1E1E] text-lg font-bold mb-3">
               Welcome To{" "}
-              <span className="text-main text-xl font-bold">
+              <span className="text-mobileMain md:text-main text-xl font-bold">
                 KIRO TRAVEL
               </span>
             </p>
@@ -238,7 +238,7 @@ function SignUp({classInDesktop, hiddenElement}) {
               <button
                 disabled={userLoading}
                 type="submit"
-                className="py-2 px-4 flex justify-center items-center rounded-lg w-full bg-secondary text-white hover:text-mobileMain  border duration-300 hover:bg-transparent hover:border-mobileMain min-w-[122px] min-h-[45px]"
+                className="py-2 px-4 flex justify-center items-center rounded-lg w-full bg-mobileMain md:bg-secondary text-white hover:text-mobileMain  border duration-300 hover:bg-transparent hover:border-mobileMain min-w-[122px] min-h-[45px]"
               >
                 {userLoading ? (
                   <Loading width="27px" height="27px" />

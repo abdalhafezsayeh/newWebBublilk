@@ -67,6 +67,13 @@ function ShuttelForm() {
 
   return (
     <div className="w-full h-full relative ">
+      <div className="backdrop-blur-[2px] absolute top-0 left-0 w-full h-full z-10 bg-[#9F9F9F80] flex justify-center items-center">
+        <img 
+          alt="taxi ferney volitare"
+          src="/home/commingSoon.gif"
+          className="object-contain w-1/2"
+        />
+      </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full h-full p-3 flex flex-col text-text gap-8 justify-center animate__animated animate__fadeIn"

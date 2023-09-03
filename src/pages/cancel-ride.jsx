@@ -1,13 +1,13 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @next/next/no-img-element */
 import ModalCom from "@/components/globalComponents/Modal";
 import AxiosInstance from "@/helper/AxiosInstance";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { BsFillCalendar2CheckFill } from "react-icons/bs";
 
-const AcceptReqAdmin = () => {
+const CancelRide = () => {
 
   const router = useRouter()
   const [loadingRequest, setLoadingRequest] = useState(true);
@@ -15,13 +15,12 @@ const AcceptReqAdmin = () => {
   const [showModalWhenSucsess, setShowModalWhenSucsess] = useState(false)
   const [showModalWhenFaild, setShowModalWhenFaild] = useState(false)
   const [dataOffer, setDataOffer] = useState(null);
-  const [lon, setLon] = useState('');
-  const [lat, setLat] = useState('');
   const [valuePrice, setValuePrice] = useState('');
-  const [showModalRequestAlreadyConfirmed, setShowModalRequestAlreadyConfirmed] = useState(false)
+  const [refundOrNo, setRefundOrNo] = useState(true)
 
   const query = router.query
   
+  console.log(query)
   
 
   useEffect(() => {
@@ -29,7 +28,6 @@ const AcceptReqAdmin = () => {
     AxiosInstance.get(`driver/offer/temporary?id=${query?.id}`)
       .then((res) => {
         setDataOffer(res?.data?.request);
-        navigator.geolocation.getCurrentPosition(showPosition);
       })
       .catch((err) => {
         console.log(err);
@@ -46,46 +44,28 @@ const AcceptReqAdmin = () => {
     e.preventDefault();
 
   const  obj = {
-      price:valuePrice,
-      request:query?.id,
-      driver_lang: lon,
-      driver_lat: lat,
-      driver: 129,
+      refund:valuePrice ? valuePrice : '0',
+      agreement:refundOrNo,
       request_id:query?.id
     }
     
-    if(!obj?.price || !obj?.request) return
+    if(!obj?.refund) return
 
     setLoadingSendOffer(true)
-    AxiosInstance.post('driver/offer/temporary/', obj)
+    AxiosInstance.post('ride-request/cancellation-agreement/', obj)
     .then((response) => {
       console.log(response)
       setShowModalWhenSucsess(true)
       // reset all useState 
-      setLon('')
-      setLat('')
       setValuePrice('')
     })
     .catch((err) => {
-      console.log(err?.response?.data?.message) 
-      if(err?.response?.data?.message == "Request already confirmed") {
-        setShowModalRequestAlreadyConfirmed(true)
-      }
       if(err.response.data.error) {
         setShowModalWhenFaild(true)
       }
     })
     .finally(() => setLoadingSendOffer(false))
   }
-
-
-
-  
-  function showPosition(position) {
-    setLon(position.coords.longitude)
-    setLat(position.coords.latitude)
-  }
-
 
 
   if (loadingRequest) {
@@ -193,6 +173,7 @@ const AcceptReqAdmin = () => {
               <span className="text-[11px]">{dataOffer?.special_luggage}</span>
             </div>
           )}
+
         </div>
 
         {/* Forms  */}
@@ -240,24 +221,36 @@ const AcceptReqAdmin = () => {
             </div>
           </div>
           {/* End Some Option  */}
-          <div className="p-5">
-            <input
-              required
-              value={valuePrice}
-              onChange={(e) => setValuePrice(e.target.value)}
-              type="number"
-              className="my-1 pl-3 border-[1px] border-[#999] outline-none leading-[38px] rounded-lg text-[12px] w-[100%] h-[38px]"
-              placeholder="Enter Price"
-            />
-            <button
-              disabled={loadingSendOffer}
-              onClick={(e) => handleAccept(e)}
-              className="bg-mobileMain text-white w-[100%] h-[40px] rounded-lg mt-3"
-            >
-              {loadingSendOffer ? "Loading..." : "Make Offer"}
-            </button>
+          <div className="px-5 border-t-[10px] border-[#eee] pt-3">
+            <h3 className="text-center pb-3">Cancellation agreement</h3>
+            <div className="flex gap-4 justify-center">
+              <button onClick={() => setRefundOrNo(true)} className={`px-6 py-1 rounded-md ${refundOrNo ? 'bg-mobileMain text-white' : 'text-mobileMain border-[1px] border-mobileMain bg-white'} duration-100`}>Yes</button>
+              <button onClick={() => setRefundOrNo(false)} className={`px-6 py-1 rounded-md  ${refundOrNo ? 'text-mobileMain border-[1px] border-mobileMain bg-white' : 'bg-mobileMain text-white'} duration-100`}>No</button>
+            </div>
           </div>
+
+            <div className="p-5">
+              {refundOrNo && (
+                <input
+                  required
+                  value={valuePrice}
+                  onChange={(e) => setValuePrice(e.target.value)}
+                  type="number"
+                  className="my-1 pl-3 border-[1px] border-[#999] outline-none leading-[38px] rounded-lg text-[12px] w-[100%] h-[38px]"
+                  placeholder="Enter Refund"
+                  />
+                )}
+              <button
+                disabled={loadingSendOffer}
+                onClick={(e) => handleAccept(e)}
+                className="bg-mobileMain text-white w-[100%] h-[40px] rounded-lg mt-3"
+              >
+                {loadingSendOffer ? "Loading..." : "Confirm"}
+              </button>
+            </div>
+
         </div>
+        
 
         <div className="bg-white rounded-2xl mt-2 p-4 ">
           <div className="flex flex-row gap-2 items-center">
@@ -272,7 +265,7 @@ const AcceptReqAdmin = () => {
           <div className="w-[90%] bg-white p-4 m-auto rounded-lg">
             <img src="suc.gif" className="m-auto" alt="" />
             <p className="text-center text-[14px] font-bold">
-              Offer Had Been Sent To Client
+              The trip has been canceled
             </p>
           </div>
         </ModalCom>
@@ -291,28 +284,13 @@ const AcceptReqAdmin = () => {
             </p>
           </div>
         </ModalCom>
-
-        <ModalCom visible={showModalRequestAlreadyConfirmed} showHeader={false}>
-          <div className="w-[90%] bg-white p-4 m-auto rounded-lg relative">
-            <span
-              onClick={() => setShowModalRequestAlreadyConfirmed(false)}
-              className="absolute top-2 right-2 cursor-pointer"
-            >
-              <AiOutlineCloseCircle size={20} />
-            </span>
-            <img src="err.gif" className="m-auto" alt="" />
-            <p className="text-center text-[14px] font-bold">
-              Request confirmed with another driver
-            </p>
-          </div>
-        </ModalCom>        
       </div>
     </div>
   );
 };
 
-export default AcceptReqAdmin;
+export default CancelRide;
 
-AcceptReqAdmin.getLayout = function getLayout(page) {
+CancelRide.getLayout = function getLayout(page) {
   return <>{page}</>;
 };

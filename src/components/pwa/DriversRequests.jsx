@@ -4,7 +4,7 @@ import { UserData } from "@/context/userContext";
 import AxiosInstance from "@/helper/AxiosInstance";
 import Pusher from "pusher-js";
 import { useContext, useEffect } from "react";
-import { BiTimeFive } from "react-icons/bi";
+import { BiArrowBack, BiTimeFive } from "react-icons/bi";
 import { BsStarFill } from "react-icons/bs";
 import Loading from "../globalComponents/Loading";
 import { Puff } from "react-loader-spinner";
@@ -13,7 +13,6 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { toast } from "react-hot-toast";
 import ModalCom from "../globalComponents/Modal";
 import Link from "next/link";
-import { IoIosArrowForward } from "react-icons/io";
 
 function DriversRequests() {
   const {
@@ -141,10 +140,10 @@ function DriversRequests() {
           </div>
 
           <div className="mt-[30px]"></div>
-          <div className="fixed bottom-0 left-0 w-full h-[60px] mt-9 bg-[#FFF]  p-1 shadow-[0px_0px_20px_rgba(0,0,0,0.2)] flex justify-center items-center">
+          <div className="fixed bottom-0 left-0 w-full h-[60px] mt-9 bg-[#FFF]  p-1 shadow-[0px_0px_20px_rgba(0,0,0,0.2)] flex justify-between items-center gap-3">
             <button
               onClick={(e) => handleCancelRide(e)}
-              className="w-[90%] h-[80%] m-auto bg-[#DC453D] text-white rounded-lg font-semibold capitalize"
+              className="w-[90%] py-2 tracking-wider bg-[#DC453D] text-white rounded-lg font-medium capitalize"
             >
               {loadingCancel ? (
                 <Loading width="27px" height="27px" />
@@ -152,13 +151,20 @@ function DriversRequests() {
                 "cancel ride"
               )}
             </button>
+
+            <button 
+              onClick={() => handleCloseWating()} 
+              className="w-full py-2 tracking-wider text-center text-mobileMain rounded-lg font-medium bg-transparent border border-[#DEE2E7]">
+              Home
+            </button>
+
           </div>
 
           <div
             onClick={() => handleCloseWating()}
-            className={`fixed -top-5 right-5 cursor-pointer mt-9 text-red-400 p-1 shadow-[0px_0px_20px_rgba(0,0,0,0.2)] flex justify-center items-center`}
+            className={`fixed top-4 left-5 cursor-pointer bg-white rounded-md p-1.5 shadow-[0px_0px_20px_rgba(0,0,0,0.2)] flex justify-center items-center`}
           >
-            <AiFillCloseCircle size={25} />
+            <BiArrowBack />
           </div>
         </div>
       )}
@@ -174,53 +180,47 @@ export const DriverCard = ({ item, setOfferStatus, offerStatus, shwoFromTo = fal
 
   const [distance, setDistance] = useState(null)
   const [duration, setDuration] = useState(null)
-
-  console.log(item)
+  const [formattedDataTheToday, setFormattedDataTheToday] = useState(null)
+  const [showDoneSchedule, setShowDoneSchedule] = useState(false)
+  const [showInsufficientDriverFunds, setShowInsufficientDriverFunds] = useState(false)
 
   const {
     walletPrice,
     setFlagWhenUserSendBookingFindDriver,
     dataTripeFromFindRide,
-    setDataTheOfferFromDriverWhenUserClickAccept
   } = useContext(UserData);
   const router = useRouter();
   const [loadingButtonAccept, setLoadingButtonAccept] = useState(false);
   const [loadingButtonReject, setLoadingButtonReject] = useState(false);
   const [theTripSchedule, setTheTripSchedule] = useState(false);
 
+  // Handel Show Time Way Between User And Driver
+  async function calculateRoute() {
+    if (!item?.driver_lang || !item?.driver_lat) {
+      return null;
+    } else {
+      const dirctionServices = new google.maps.DirectionsService();
+      const results = await dirctionServices.route({
+        origin: {
+          lat: parseFloat(item?.driver_lat),
+          lng: parseFloat(item?.driver_lang)
+        },
+        destination:item?.request_departure ? item.request_departure : item?.departure,
+        travelMode: "DRIVING",
+      });
 
-
-    // Handel Show Time Way Between User And Driver
-    async function calculateRoute() {
-      if (!item?.driver_lang || !item?.driver_lat) {
-        return null;
-      } else {
-        const dirctionServices = new google.maps.DirectionsService();
-        const results = await dirctionServices.route({
-          origin: {
-            lat: parseFloat(item?.driver_lat),
-            lng: parseFloat(item?.driver_lang)
-          },
-          destination:item?.request_departure ? item.request_departure : item?.departure,
-          travelMode: "DRIVING",
-        });
-  
-          setDistance(results.routes[0].legs[0].distance.text);
-          setDuration(results.routes[0].legs[0].duration.text)
-      }
+        setDistance(results.routes[0].legs[0].distance.text);
+        setDuration(results.routes[0].legs[0].duration.text)
     }
+  }
 
-    useEffect(() => {
-      setTimeout(() => {
-
-        calculateRoute()
-
-      }, 1000)
-      
-    }, []);
-    
-    // console.log(distance)
-    // console.log(duration)
+  useEffect(() => {
+    setTimeout(() => {
+      calculateRoute()
+    }, 1000)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  
 
   useEffect(() => {
     const today = new Date();
@@ -228,6 +228,8 @@ export const DriverCard = ({ item, setOfferStatus, offerStatus, shwoFromTo = fal
     const month = String(today.getMonth() + 1).padStart(2, "0");
     const day = String(today.getDate()).padStart(2, "0");
     const formattedDate = `${year}-${month}-${day}`;
+
+    setFormattedDataTheToday(formattedDate)
 
     if (dataTripeFromFindRide.date < formattedDate) return;
     if (dataTripeFromFindRide.date == formattedDate) return;
@@ -237,7 +239,7 @@ export const DriverCard = ({ item, setOfferStatus, offerStatus, shwoFromTo = fal
     }
   }, [dataTripeFromFindRide]);
 
-  console.log(dataTripeFromFindRide)
+  // console.log(dataTripeFromFindRide?.payment)
 
   const handleAccept = (e, id, objectTheDriver) => {
     e.preventDefault();
@@ -300,13 +302,20 @@ export const DriverCard = ({ item, setOfferStatus, offerStatus, shwoFromTo = fal
   };
 
   const handelPayWithCash = (id, objectTheDriver)=>{
+    console.log(objectTheDriver)
     return AxiosInstance.post("wallet/pay-trip/cash/", { offer_id: id })
         .then((res) => {
-          // console.log(res);
-          // setDataTheOfferFromDriverWhenUserClickAccept(objectTheDriver);
-          localStorage.setItem('dataTheOfferFromDriverWhenUserClickAccept', JSON.stringify(objectTheDriver))
-          router.push(`/acceptOffer`);
-          setFlagWhenUserSendBookingFindDriver(null);
+          console.log(res.data.trip.date)
+          console.log(formattedDataTheToday)
+          if(res?.data?.trip?.date > formattedDataTheToday) {
+            console.log('apoointment')
+            setShowDoneSchedule(true)
+          } else {
+            console.log("not apoointment")
+            localStorage.setItem('dataTheOfferFromDriverWhenUserClickAccept', JSON.stringify(objectTheDriver))
+            router.push(`/acceptOffer`);
+            setFlagWhenUserSendBookingFindDriver(null);
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -339,30 +348,57 @@ export const DriverCard = ({ item, setOfferStatus, offerStatus, shwoFromTo = fal
     } else {
       return AxiosInstance.post("wallet/pay-trip/", { offer_id: id })
         .then((res) => {
-          // setDataTheOfferFromDriverWhenUserClickAccept(objectTheDriver);
-          localStorage.setItem('dataTheOfferFromDriverWhenUserClickAccept', JSON.stringify(objectTheDriver))
-          router.push(`/acceptOffer`);
-          setFlagWhenUserSendBookingFindDriver(null);
+          console.log(res)
+          if(res?.data?.trip?.date > formattedDataTheToday) {
+            console.log('apoointment')
+            setShowDoneSchedule(true)
+           } else {
+             localStorage.setItem('dataTheOfferFromDriverWhenUserClickAccept', JSON.stringify(objectTheDriver))
+             router.push(`/acceptOffer`);
+             setFlagWhenUserSendBookingFindDriver(null);
+           }
         })
         .catch((err) => {
           console.log(err);
-          if (err.response.data.message == "Insufficient User funds" || err.response.data.message == "Insufficient Driver funds") {
+          if (err.response.data.message == "Insufficient User funds") {
             toast.error("Insufficient funds");
             router.push("/wallet");
             setFlagWhenUserSendBookingFindDriver(null);
+          } 
+
+          if(err.response.data.message == "Insufficient Driver funds") {
+            toast.error("Insufficient Driver funds");
+            setShowInsufficientDriverFunds(true)
           }
         })
     }
   }
 
   const handlePayMethodsWhenUserClickAccept = (id, objectTheDriver) => {
-    if (dataTripeFromFindRide?.payment == "cash") {
-      return handelPayWithCash(id, objectTheDriver)
-    } else if (dataTripeFromFindRide?.payment == "card") {
-      return handelPayWithCard(id, objectTheDriver)
-    } else if (dataTripeFromFindRide?.payment == "wallet") {
-      return handelWalletPay(id, objectTheDriver)
+
+
+    if(objectTheDriver?.payment_method) {
+
+        if(objectTheDriver?.payment_method == "cash") {
+          return handelPayWithCash(id, objectTheDriver)
+        } else if (objectTheDriver?.payment_method == "card") {
+          return handelPayWithCard(id, objectTheDriver)
+        } else if (objectTheDriver?.payment_method == "wallet") {
+          return handelWalletPay(id, objectTheDriver)
+        }
+
+    } else {
+
+        if (dataTripeFromFindRide?.payment == "cash") {
+          return handelPayWithCash(id, objectTheDriver)
+        } else if (dataTripeFromFindRide?.payment == "card") {
+          return handelPayWithCard(id, objectTheDriver)
+        } else if (dataTripeFromFindRide?.payment == "wallet") {
+          return handelWalletPay(id, objectTheDriver)
+        }
+
     }
+
   };
 
   const handleReject = (e, id) => {
@@ -397,33 +433,41 @@ export const DriverCard = ({ item, setOfferStatus, offerStatus, shwoFromTo = fal
       .finally(() => setLoadingButtonReject(false));
   };
 
+
+  const handleCloseMoadalAndNavigateToTrips = (e) => {
+    e.preventDefault();
+    router.push('/trips');
+    setShowDoneSchedule(false);
+  }
+
   return (
     <>
-      <div className="bg-white rounded-md shadow-md py-3 px-4 flex flex-col gap-y-4 animate__animated animate__backInDown">
+      <div className="bg-white rounded-md shadow-[rgba(0,0,0,0.1)_0px_0px_12px] py-3 px-4 flex flex-col gap-y-4 animate__animated animate__backInDown">
+        {/* from & to */}
+        {shwoFromTo && (
+          <div className=" flex items-center justify-between gap-x-1 flex-wrap">
+            <span className="max-w-full flex items-center gap-x-px text-mobileMain">
+              From:
+              <p className="text-[#666666] truncate">{item?.departure}</p>
+            </span>
+            <span className="max-w-full flex items-center gap-x-px text-mobileMain">
+              To:
+              <p className="text-[#666666] truncate">{item?.arrival}</p>
+            </span>
+          </div>
+        )}
+
         {/* name & rate */}
         <div className="flex flex-row justify-between items-center">
           <h3 className="font-semibold text-lg text-[#103A10] truncate capitalize">
             {item?.driver_name}
           </h3>
           <span className="flex items-center gap-x-1">
-            {item?.driver_rate?.toFixed(0)}
+            {item?.driver_rate?.toFixed(1)}
             <BsStarFill color="#DFB300" />
           </span>
         </div>
-        {/* from & to */}
-        {/* from & to */}
-        {shwoFromTo && (
-          <div className=" flex items-center justify-between gap-x-1 flex-wrap">
-            <span className="max-w-full flex items-center gap-x-px text-mobileMain">
-              From:
-              <p className="text-[#666666] truncate">{item.departure}</p>
-            </span>
-            <span className="max-w-full flex items-center gap-x-px text-mobileMain">
-              To:
-              <p className="text-[#666666] truncate">{item.arrival}</p>
-            </span>
-          </div>
-        )}
+
         <div className="flex justify-between flex-wrap">
           {/* car Details */}
           <div className="flex flex-col gap-y-1">
@@ -524,6 +568,24 @@ export const DriverCard = ({ item, setOfferStatus, offerStatus, shwoFromTo = fal
           </Link>
         </div>
       </ModalCom>
+
+
+      <ModalCom visible={showDoneSchedule} showHeader={false} >
+        <div className="bg-white p-3 rounded-md flex flex-col">
+          <img className="w-2/4 m-auto" src="/isScheduled.gif" alt="" />
+          <p className="text-center text-[#333] py-6 border-b-2 text-[14px]">This request has been accepted. You can proceed to the trips page, and you can continue the journey on the appropriate day.</p>
+          <button onClick={(e) => handleCloseMoadalAndNavigateToTrips(e)} className="mt-5 bg-mobileMain text-white text-[12px] px-3 py-2 rounded-md">Go Page Trips</button>
+        </div>
+      </ModalCom>
+
+      <ModalCom visible={showInsufficientDriverFunds} showHeader={false} >
+        <div className="bg-white p-3 rounded-md flex flex-col">
+          <img className="w-100  m-auto" src="/animation_lluyoifj_small.gif" alt="" />
+          <p className="text-center text-[#333] py-6 border-b-2 text-[16px]">Insufficient Driver funds.</p>
+          <button onClick={() => setShowInsufficientDriverFunds(false)} className="mt-5 bg-mobileMain text-white text-[12px] px-3 py-2 rounded-md">Ok</button>
+        </div>
+      </ModalCom>
+
     </>
   );
 };

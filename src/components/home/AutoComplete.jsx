@@ -29,8 +29,6 @@ function AutoCompletee({placeholder , register}) {
   const handelPlaces = () => {
     if (autocompletes !== null) {
       let city = autocompletes.getPlace();
-
-      // console.log(city?.name);
     }
   };
   return (

@@ -76,7 +76,9 @@ function UserWallet() {
   return (
     <>
       <BackButton />
-
+      <h3 className="z-40 text-lg w-fit font-medium text-center sm:hidden fixed top-4 left-1/2 -translate-x-1/2 p-[6px]">
+        Wallet
+      </h3>
       {walletData.error !== 'true' && walletData.data && (
         <div className="px-4 pt-14 flex svh max-h-screen overflow-hidden flex-col gap-y-6 relative">
           {walletData.error == 'no fund yet' && 

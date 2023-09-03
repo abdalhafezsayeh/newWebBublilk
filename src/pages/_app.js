@@ -26,6 +26,7 @@ function App({ Component, pageProps }) {
         <CallContext>
             <main className={`${poppins.className}`}>
               <VoiceCall />
+              <Toaster />
               <ShowCall />
               <Component {...pageProps} />
             </main>

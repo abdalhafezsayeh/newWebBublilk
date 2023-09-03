@@ -48,17 +48,6 @@ input[type=number]::-webkit-outer-spin-button {
   justify-content: center !important;
 }
 
-
-body {
-  scroll-behavior: smooth;
-}
-
-/* @media (max-width: 640px) {
-  body {
-    overflow: hidden;
-  }
-} */
-
 .PhoneInputInput{
   outline: none;
   border: none;
@@ -178,11 +167,16 @@ body {
 .swiper-pagination-bullet-active{
   background: #00BFB3 !important;
 }
-.swiper-button-prev, .swiper-button-next{
+.swiper-button-prev, .swiper-button-next {
   width: 25px !important;
   height: 25px !important;
   bottom: 0 !important;
   top: calc(100% - 12.5px) !important;
   color:#00BFB3 !important;
   z-index: 15 !important;
+}
+
+.my_test .swiper-button-prev, .my_test .swiper-button-next {
+  top: calc(100% - 276.5px) !important;
+
 }

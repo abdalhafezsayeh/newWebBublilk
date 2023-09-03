@@ -50,7 +50,7 @@ function OurCustomerFeedback() {
 
 
   return (
-    <div className='py-[60px] bg-[#00bfb30a]'>
+    <div className='py-[60px] bg-[#00bfb30a] relative'>
       <p className='text-[20px] font-[600] text-main text-center mb-0'>What’s our customer saying</p>
       <p className="text-center text-[40px] font-[700] text-[#1E1E1E] mb-6">Our Customer Feedback</p>
       <Container>
@@ -61,12 +61,12 @@ function OurCustomerFeedback() {
           </div>
 
           {/* User Rating  */}
-          <div ref={slider} className='bg-white rounded-lg overflow-hidden p-5 w-[100%] lg:w-[40%]  mt-8 h-fit shadow-lg relative'>
+          <div ref={slider} className='overflow-hidden p-5 w-[100%] lg:w-[40%] mt-8 h-fit relative flex flex-col gap-6'>
             {/* User Head  */}
 
             <div ref={slides} className='flex gap-10 flex-row duration-500'>
               {feedback.map((item, index) => (
-                <div key={index} className='slide'>
+                <div key={index} className='slide bg-white shadow-lg rounded-lg'>
                   <div className='flex gap-2 items-center'>
                     <span><BiUserCircle size={40} className='opacity-70' /></span>
                     <span className='flex flex-col'>
@@ -88,7 +88,18 @@ function OurCustomerFeedback() {
                 </div>
               ))}
             </div>
-
+            
+            {/* Control */}
+            <div className='flex gap-2 justify-center'>
+              {/* prev */}
+              <span onClick={handlePrevSlide} className={`${currentSlide == 0 ? "text-main bg-[#00bfb34d] cursor-not-allowed" : "text-white bg-main cursor-pointer" } drop-shadow-[0_10px_8px_#00BFB380] w-8 h-8 rounded-full flex justify-center items-center cursor-pointer'`}>
+                <MdOutlineArrowBackIosNew />
+              </span>
+              {/* next */}
+              <span onClick={handleNextSlide} className={`${currentSlide == feedback.length - 1  ? "text-main bg-[#00bfb34d] cursor-not-allowed" : "text-white bg-main cursor-pointer" } drop-shadow-[0_10px_8px_#00BFB380] w-8 h-8 rounded-full flex justify-center items-center`}>
+                <MdOutlineArrowForwardIos />
+              </span>
+            </div>
 
           </div>
 
@@ -99,17 +110,7 @@ function OurCustomerFeedback() {
         
       </Container>
   
-        {/* Control */}
-        <div className='flex gap-2 justify-center mt-4 lg:mt-0'>
-          {/* prev */}
-          <span onClick={handlePrevSlide} className=' text-main bg-[#00bfb34d] w-8 h-8 rounded-full flex justify-center items-center cursor-pointer'>
-            <MdOutlineArrowBackIosNew />
-          </span>
-          {/* next */}
-          <span onClick={handleNextSlide} className=' text-white bg-main w-8 h-8 rounded-full flex justify-center items-center cursor-pointer'>
-            <MdOutlineArrowForwardIos />
-          </span>
-        </div>
+        
     </div>
   )
 }

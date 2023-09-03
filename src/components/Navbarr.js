@@ -169,7 +169,7 @@ const Navbarr = () => {
       <div
         className={`${
           navbarr || active2
-            ? "bg-[#ffffffeb]  text-black shadow-2xl"
+            ? "bg-white  text-black shadow-2xl"
             : "text-black bg-white"
         } duration-200 sticky w-full top-0 z-[90] hidden md:block`}
       >
@@ -221,8 +221,8 @@ const Navbarr = () => {
                     <BiUserCircle size={25} />
                   </div>
                   <div
-                    className={`myProfileShowOrHide duration-500 z-50 rounded-b-xl lg:absolute -left-32 top-12 bg-[#ffffffeb] drop-shadow-2xl min-w-[120px] text-black ${
-                      showProfileMenu ? "block animate__animated animate__fadeInDown" : "hidden animate__animated animate__fadeInUp"
+                    className={`myProfileShowOrHide duration-500 z-40 overflow-hidden rounded-b-xl lg:absolute -left-32 top-12 bg-[#ffffff] drop-shadow-2xl min-w-[120px] text-black ${
+                      showProfileMenu ? "h-[162px]" : "h-0"
                     }`}
                   >
                     <ul className="p-1 w-[200px]">
@@ -234,7 +234,7 @@ const Navbarr = () => {
                           <CgProfile size={30} />
                         </span>
                         <span className="flex flex-col">
-                          <span className="text-[13px]">Ahmed</span>
+                          <span className="text-[13px]">{data.full_name}</span>
                           <span className="text-[11px] text-[#555]">Online</span>
                         </span>
                       </li>
@@ -591,8 +591,8 @@ const Navbarr = () => {
                     <BiUserCircle size={25} />
                   </div>
                   <div
-                    className={`myProfileShowOrHide duration-500 z-50 rounded-b-xl lg:absolute -left-32 top-12 bg-[#ffffffeb] drop-shadow-2xl min-w-[120px] text-black ${
-                      showProfileMenu ? "block animate__animated animate__fadeInDown" : "hidden"
+                    className={`myProfileShowOrHide min-w-fit overflow-hidden transition-all duration-300 z-10 rounded-b-xl lg:absolute -left-32 top-12 bg-[#ffffff] drop-shadow-2xl text-black ${
+                      showProfileMenu ? "h-[162px]" : "h-0"
                     }`}
                   >
                     <ul className="p-1 w-[200px]">
@@ -604,7 +604,7 @@ const Navbarr = () => {
                           <CgProfile size={30} />
                         </span>
                         <span className="flex flex-col">
-                          <span className="text-[13px]">Ahmed</span>
+                          <span className="text-[13px]">{data.full_name}</span>
                           <span className="text-[11px] text-[#555]">Online</span>
                         </span>
                       </li>

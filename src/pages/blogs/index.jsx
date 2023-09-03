@@ -3,12 +3,26 @@ import Container from "@/components/globalComponents/Container";
 import PageHead from "@/components/globalComponents/PageHead";
 import AxiosInstance from "@/helper/AxiosInstance";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsStars } from "react-icons/bs";
 
-const Blogs = ({blog}) => {
+const Blogs = () => {
   const router = useRouter()
   const [showBlogs, setShowBlogs] = useState(4);
+  const [blog, setBlog] = useState([])
+
+
+  useEffect(() => {
+
+    AxiosInstance.get('blog')
+    .then((res) => {
+      setBlog(res.data)
+    })
+    .catch(((err) => {
+      console.log(err)
+    }))
+
+  }, [])
 
   const handelGoToDetails = (data)=>{
     router.push({pathname:"/blogs/details-blog" , query:{blog:JSON.stringify(data)}})
@@ -90,19 +104,19 @@ const Blogs = ({blog}) => {
 
 export default Blogs;
 
-export async function getServerSideProps(res) {
-  try{
+// export async function getServerSideProps(res) {
+//   try{
 
-    const {data} = await AxiosInstance.get("blog/")
+//     const {data} = await AxiosInstance.get("blog/")
 
-    return{
-      props:{blog:data}
-    }
+//     return{
+//       props:{blog:data}
+//     }
 
-  }
-  catch (err){
-    return{
-      props:{blog:[]}
-    }
-  }
-}
+//   }
+//   catch (err){
+//     return{
+//       props:{blog:[]}
+//     }
+//   }
+// }

@@ -1,99 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useRef, useState } from 'react'
 import Container from '../globalComponents/Container'
-import { MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md'
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 
-const feedback = [
-  {
-    name: '1',
-    rating: 2.403,
-    Comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam ab, molestiae architecto sed molestias id ipsa possimus iure? Quibusdam, necessitatibus.'
-  },
-  {
-    name: '2',
-    rating: 3.403,
-    Comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam ab, molestiae architecto sed molestias id ipsa possimus iure? Quibusdam, necessitatibus.'
-  },
-  {
-    name: '3',
-    rating: 4.403,
-    Comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam ab, molestiae architecto sed molestias id ipsa possimus iure? Quibusdam, necessitatibus.'
-  },
-  {
-    name: '4',
-    rating: 4.403,
-    Comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam ab, molestiae architecto sed molestias id ipsa possimus iure? Quibusdam, necessitatibus.'
-  },
-  {
-    name: '5',
-    rating: 4.403,
-    Comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam ab, molestiae architecto sed molestias id ipsa possimus iure? Quibusdam, necessitatibus.'
-  },
-  {
-    name: '6',
-    rating: 4.403,
-    Comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam ab, molestiae architecto sed molestias id ipsa possimus iure? Quibusdam, necessitatibus.'
-  },
-  {
-    name: '7',
-    rating: 4.403,
-    Comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam ab, molestiae architecto sed molestias id ipsa possimus iure? Quibusdam, necessitatibus.'
-  },
-  {
-    name: '8',
-    rating: 4.403,
-    Comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam ab, molestiae architecto sed molestias id ipsa possimus iure? Quibusdam, necessitatibus.'
-  },
-  {
-    name: '9',
-    rating: 4.403,
-    Comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam ab, molestiae architecto sed molestias id ipsa possimus iure? Quibusdam, necessitatibus.'
-  },
-  {
-    name: '10',
-    rating: 4.403,
-    Comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam ab, molestiae architecto sed molestias id ipsa possimus iure? Quibusdam, necessitatibus.'
-  },
-  {
-    name: '11',
-    rating: 4.403,
-    Comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam ab, molestiae architecto sed molestias id ipsa possimus iure? Quibusdam, necessitatibus.'
-  },
-  {
-    name: '12',
-    rating: 4.403,
-    Comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam ab, molestiae architecto sed molestias id ipsa possimus iure? Quibusdam, necessitatibus.'
-  },
+// import required modules
+import { Pagination, Navigation } from 'swiper/modules';
 
-]
 
 function SliderOne() {
 
   const [activeSlide, setActiveSlide] = useState(0)
-  const slider = useRef(null);
-  const slides = useRef(null);
-  const [currentSlide, setCurrentSlide] = useState(0);
 
-  useEffect(() => {
-    const slideWidth = slider.current.clientWidth;
-    const slidesContainer = slides.current;
-    slidesContainer.style.transform = `translateX(-${slideWidth * currentSlide}px)`;
-  }, [currentSlide]);
 
-  const handlePrevSlide = () => {
-    if (currentSlide > 0) {
-      setCurrentSlide(currentSlide - 1);
-    }
-  };
 
-  const handleNextSlide = () => {
-    if(feedback.length / 4 == currentSlide + 1) return
 
-    if (currentSlide < feedback.length - 1) {
-      setCurrentSlide(currentSlide + 1);
-    }
-  };
 
   return (
     <div className='py-20'>
@@ -111,23 +37,21 @@ function SliderOne() {
 
 
         {/* Slider  */}
-        <div className='mt-20 flex gap-3'>
-          {/* Start Left */}
-          <div onClick={handlePrevSlide} className='w-[5%] relative '>
-            <MdArrowBackIosNew size={40} className='m-auto text-main font-bold cursor-pointer absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]' />
-          </div>
-          {/* End Left */}
-
-          <div ref={slider} className='w-[90%] overflow-hidden'>
-            <div ref={slides} className='flex justify-between  gap-7 duration-500'>
-
-              {feedback.map((item, index) => (
-
-                <div key={index} className='rounded-2xl overflow-hidden relative slide_one '>
+        <>
+          <Swiper
+            slidesPerView={4}
+            spaceBetween={40}
+            pagination={{clickable: true}}
+            navigation={true}
+            modules={[Pagination, Navigation]}
+            className="mySwiper my_test w-full min-h-fit !px-14 !pb-[50px] mt-6"
+          >
+            <SwiperSlide>
+                <div  className='rounded-2xl overflow-hidden relative'>
                   <div className='absolute top-0 left-0 w-full h-full bg-black/60 z-10'></div>
                   <img className='w-full' src="/bg.png" alt="" />
                   <div className='flex flex-col w-full z-20 absolute top-[70%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center text-white font-bold text-[16px] leading-[20px]'>
-                    <span className='capitalize font-[700] text-[30px]'>{item.name}</span>
+                    <span className='capitalize font-[700] text-[30px]'>Paris</span>
                     <span className='text-[22px] font-[400] mt-3 capitalize'>from</span>
                     <span className='text-[22px] font-[700] mt-3 capitalize'>Eur 315.68</span>
                     <span className='text-[20px] font-[500] mt-3 capitalize'>On way/Economy</span>
@@ -136,27 +60,73 @@ function SliderOne() {
                     </span>
                   </div>
                 </div>
-
-              ))}
-
-            </div>
-          </div>
-
-          {/* Right */}
-          <div onClick={handleNextSlide} className='w-[5%] relative'>
-            <MdArrowForwardIos size={40} className='m-auto text-main font-bold cursor-pointer absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]' />
-          </div>
-          {/* End Right */}
-        </div>
+            </SwiperSlide>
+            <SwiperSlide>
+                <div  className='rounded-2xl overflow-hidden relative'>
+                  <div className='absolute top-0 left-0 w-full h-full bg-black/60 z-10'></div>
+                  <img className='w-full' src="/bg.png" alt="" />
+                  <div className='flex flex-col w-full z-20 absolute top-[70%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center text-white font-bold text-[16px] leading-[20px]'>
+                    <span className='capitalize font-[700] text-[30px]'>Paris</span>
+                    <span className='text-[22px] font-[400] mt-3 capitalize'>from</span>
+                    <span className='text-[22px] font-[700] mt-3 capitalize'>Eur 315.68</span>
+                    <span className='text-[20px] font-[500] mt-3 capitalize'>On way/Economy</span>
+                    <span className='mt-3'>
+                      <button className='w-[140px] h-[35px] bg-secondary rounded-2xl'>Book Now</button>
+                    </span>
+                  </div>
+                </div>
+            </SwiperSlide>
+            <SwiperSlide>
+                <div  className='rounded-2xl overflow-hidden relative'>
+                  <div className='absolute top-0 left-0 w-full h-full bg-black/60 z-10'></div>
+                  <img className='w-full' src="/bg.png" alt="" />
+                  <div className='flex flex-col w-full z-20 absolute top-[70%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center text-white font-bold text-[16px] leading-[20px]'>
+                    <span className='capitalize font-[700] text-[30px]'>Paris</span>
+                    <span className='text-[22px] font-[400] mt-3 capitalize'>from</span>
+                    <span className='text-[22px] font-[700] mt-3 capitalize'>Eur 315.68</span>
+                    <span className='text-[20px] font-[500] mt-3 capitalize'>On way/Economy</span>
+                    <span className='mt-3'>
+                      <button className='w-[140px] h-[35px] bg-secondary rounded-2xl'>Book Now</button>
+                    </span>
+                  </div>
+                </div>
+            </SwiperSlide>
+            <SwiperSlide>
+                <div  className='rounded-2xl overflow-hidden relative'>
+                  <div className='absolute top-0 left-0 w-full h-full bg-black/60 z-10'></div>
+                  <img className='w-full' src="/bg.png" alt="" />
+                  <div className='flex flex-col w-full z-20 absolute top-[70%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center text-white font-bold text-[16px] leading-[20px]'>
+                    <span className='capitalize font-[700] text-[30px]'>Paris</span>
+                    <span className='text-[22px] font-[400] mt-3 capitalize'>from</span>
+                    <span className='text-[22px] font-[700] mt-3 capitalize'>Eur 315.68</span>
+                    <span className='text-[20px] font-[500] mt-3 capitalize'>On way/Economy</span>
+                    <span className='mt-3'>
+                      <button className='w-[140px] h-[35px] bg-secondary rounded-2xl'>Book Now</button>
+                    </span>
+                  </div>
+                </div>
+            </SwiperSlide>
+            <SwiperSlide>
+                <div  className='rounded-2xl overflow-hidden relative'>
+                  <div className='absolute top-0 left-0 w-full h-full bg-black/60 z-10'></div>
+                  <img className='w-full' src="/bg.png" alt="" />
+                  <div className='flex flex-col w-full z-20 absolute top-[70%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-center text-white font-bold text-[16px] leading-[20px]'>
+                    <span className='capitalize font-[700] text-[30px]'>Paris</span>
+                    <span className='text-[22px] font-[400] mt-3 capitalize'>from</span>
+                    <span className='text-[22px] font-[700] mt-3 capitalize'>Eur 315.68</span>
+                    <span className='text-[20px] font-[500] mt-3 capitalize'>On way/Economy</span>
+                    <span className='mt-3'>
+                      <button className='w-[140px] h-[35px] bg-secondary rounded-2xl'>Book Now</button>
+                    </span>
+                  </div>
+                </div>
+            </SwiperSlide>                        
+          </Swiper>
+        </>
 
       </Container>
 
-        {/* Dots  */}
-        <div className='mt-10 m-auto flex justify-center items-center w-fit'>
-          <span className={`${currentSlide === 0 ? 'w-4 h-4 inline-block bg-main ' : 'w-2 h-2 bg-black' } duration-500 rounded-full m-1`}></span>
-          <span className={`${currentSlide === 1 ? 'w-4 h-4 inline-block bg-main ' : 'w-2 h-2 bg-black' } duration-500 rounded-full m-1`}></span>
-          <span className={`${currentSlide === 2 ? 'w-4 h-4 inline-block bg-main ' : 'w-2 h-2 bg-black' } duration-500 rounded-full m-1`}></span>
-        </div>
+
 
     </div>
   )

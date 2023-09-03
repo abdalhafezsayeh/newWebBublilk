@@ -146,66 +146,60 @@ const MapInMobile = () => {
             time = `${hours}:${minutes}:${seconds}.${microseconds}`
         }
         const obj = {
-            car: selectTypeCar,
-            arrival: destiationRef.current.value,
-            departure: originRef.current.value,
-            date,
-            time,
-            seats: countPersonAndBagages.person,
-            luggage: countPersonAndBagages.bagages,
-            special_luggage:`${specialLuggageState.pet ? "pet " + specialLuggageState.pet : ''} ${specialLuggageState.ski ? "Ski " + specialLuggageState.ski : ''} ${specialLuggageState.bicycle ? "Bicycle " + specialLuggageState.bicycle : ''} ${specialLuggageState.baby_seat ? "Baby Seat " + specialLuggageState.baby_seat : ''} ${specialLuggageState.wheelchair ? "Wheelchair " + specialLuggageState.wheelchair : ''}`,
-            comment : optionAndComments,
-            user:userData?.id,
-            round_trip:trips,
-            payment: methodPay,
-            trip_distance:distance,
-            trip_duration:duration,
-            return_date: trips ? return_date : undefined,
-            return_time : trips ? return_time : undefined,
-            source: platForm
+          car: selectTypeCar,
+          arrival: destiationRef.current.value,
+          departure: originRef.current.value,
+          date,
+          time,
+          seats: countPersonAndBagages.person,
+          luggage: countPersonAndBagages.bagages,
+          special_luggage:`${specialLuggageState.pet ? "pet " + specialLuggageState.pet : ''} ${specialLuggageState.ski ? "Ski " + specialLuggageState.ski : ''} ${specialLuggageState.bicycle ? "Bicycle " + specialLuggageState.bicycle : ''} ${specialLuggageState.baby_seat ? "Baby Seat " + specialLuggageState.baby_seat : ''} ${specialLuggageState.wheelchair ? "Wheelchair " + specialLuggageState.wheelchair : ''}`,
+          comment : optionAndComments,
+          user:userData?.id,
+          round_trip:trips,
+          payment: methodPay,
+          trip_distance:distance,
+          trip_duration:duration,
+          return_date: trips ? return_date : undefined,
+          return_time : trips ? return_time : undefined,
+          source: platForm
         } 
 
+        setVerfiyLoading(true)
         AxiosInstance.get("me/")
         .then((res) => {
-          // console.log(res);
-            setWalletPrice(res?.data["wallet_amount"]);
-          
-            setVerfiyLoading(true)
-            AxiosInstance.post("ride-request/", obj)
-            .then((res) => {
-                console.log(res)
-                if ((res.data.message = "Trip request created successfully")) {
+          setWalletPrice(res?.data["wallet_amount"]);
+          AxiosInstance.post("ride-request/", obj)
+          .then((res) => {
+            if ((res.data.message = "Trip request created successfully")) {
+              setPayUser(false);
+              localStorage.removeItem('dataFindDriver');
+              toast.success("Trip request created successfully", {style:{fontSize:'12px'}});
+              reset();
+              setCountPersonAndBagages({person:0, bagages:0});
+              setOptionAndComments('');
+              setTrips(false);
+              setPayment('cash')
+              setSpecialLuggageState({
+                bicycle:0,
+                wheelchair:0,
+                baby_seat:0,
+                pet:0,
+                ski:0
+              })
+            }
+            setDateTheAppointment(res?.data?.request.date)
 
-                    localStorage.removeItem('dataFindDriver');
-
-                    toast.success("Trip request created successfully", {style:{fontSize:'12px'}});
-                    reset();
-                    setCountPersonAndBagages({person:0, bagages:0});
-                    setOptionAndComments('');
-                    setTrips(false);
-                    setPayment('cash')
-                    setSpecialLuggageState({
-                      bicycle:0,
-                      wheelchair:0,
-                      baby_seat:0,
-                      pet:0,
-                      ski:0
-                    })
-                }
-                setDateTheAppointment(res?.data?.request.date)
-
-                if(res.data.request.date > formattedDate) {
-                  setFlagWhenRequistAppointment(true)
-                  handelsetDataTripeFromFindRide(res?.data?.request)
-                } else {
-                  setFlagWhenUserSendBookingFindDriver(res?.data?.request?.id);
-                  handelsetDataTripeFromFindRide(res?.data?.request)
-                  setFlagWhenRequistAppointment(false)
-                }
-
-            })
-            .catch((err) => {
-            console.log(err)
+            if(res.data.request.date > formattedDate) {
+              setFlagWhenRequistAppointment(true)
+              handelsetDataTripeFromFindRide(res?.data?.request)
+            } else {
+              setFlagWhenUserSendBookingFindDriver(res?.data?.request?.id);
+              handelsetDataTripeFromFindRide(res?.data?.request)
+              setFlagWhenRequistAppointment(false)
+            }
+          })
+          .catch((err) => {
             if(err?.response?.status === 401) {
                 router.push('/signIn')
             } else if (err?.response.data.error == "{'payment': [ErrorDetail(string='\"\" is not a valid choice.', code='invalid_choice')]}") {
@@ -213,9 +207,8 @@ const MapInMobile = () => {
             } else {
                 toast.error("Somthing Happened Try Again Later");
             }
-            })
-            .finally(() => setVerfiyLoading(false));
-      
+          })
+          .finally(() => setVerfiyLoading(false));
         })
         .catch((err) => {
           console.log(err);
@@ -246,7 +239,6 @@ const MapInMobile = () => {
 
         if (myData) {
           const parsedMyData = JSON.parse(myData);
-          console.log(parsedMyData);
           setMyDataWhenUserFindNotLogin(parsedMyData)
         }
       }
@@ -291,11 +283,11 @@ const MapInMobile = () => {
         });
 
 
-        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.platform)) {
-            setPlatForm('app')
-          } else {
-            setPlatForm('web')
-          }
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.platform)) {
+        setPlatForm('app')
+      } else {
+        setPlatForm('web')
+      }
 
     }, []);  
     
@@ -343,28 +335,28 @@ const MapInMobile = () => {
 
 
     const handleDoneOptionsAndCommments = (e) => {
-        e.preventDefault()
-        setOptionAndComment(!optionAndComment)
+      e.preventDefault()
+      setOptionAndComment(!optionAndComment)
     }
 
     // get th user location
     const [userLocation , setUserLocation ] = useState(center)
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-          const isMobile = window.innerWidth <= 768; // set your breakpoint here
-          const isDownloaded = localStorage.getItem("userDownloadApp")
-            if (!isMobile || isDownloaded ) {
-                setModalPwa(false);
-            }
-            else if(window.matchMedia('(display-mode: standalone)').matches){
-                setModalPwa(false);
-            }
+      if (typeof window !== 'undefined') {
+        const isMobile = window.innerWidth <= 768; // set your breakpoint here
+        const isDownloaded = localStorage.getItem("userDownloadApp")
+          if (!isMobile || isDownloaded ) {
+              setModalPwa(false);
+          }
+          else if(window.matchMedia('(display-mode: standalone)').matches){
+              setModalPwa(false);
+          }
 
-            navigator.geolocation.getCurrentPosition((position)=>{
-                const loc = {lat: position.coords.latitude , lng: position.coords.longitude}
-                setUserLocation(loc)
-            })
-        }
+          navigator.geolocation.getCurrentPosition((position)=>{
+              const loc = {lat: position.coords.latitude , lng: position.coords.longitude}
+              setUserLocation(loc)
+          })
+      }
     }, []);
 
 
@@ -405,22 +397,21 @@ const MapInMobile = () => {
     };
 
     const handlePayWithWallet = () => {
-    // console.log("pay with wallet" + tripId)
-        AxiosInstance.post("wallet/pay-trip/", { trip_id: tripId })
-            .then((res) => {
-                // Show Modal
-                // console.log(res)
-                setShowModalSucsess(true);
-            })
-            .catch((err) => {
-                // console.log(err)
-                if (err.response.data.message == "Insufficient User funds") {
-                setNoMonyInWellet(true);
-                }
-            })
-            .finally(() => {
-                console.log("finally");
-            });
+      AxiosInstance.post("wallet/pay-trip/", { trip_id: tripId })
+        .then((res) => {
+            // Show Modal
+            // console.log(res)
+            setShowModalSucsess(true);
+        })
+        .catch((err) => {
+            // console.log(err)
+            if (err.response.data.message == "Insufficient User funds") {
+            setNoMonyInWellet(true);
+            }
+        })
+        .finally(() => {
+            console.log("finally");
+        });
     };
 
 
@@ -431,14 +422,14 @@ const MapInMobile = () => {
 
     const handelGetCurrentLocation = ()=>{
         navigator.geolocation.getCurrentPosition((position)=>{
-            axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=AIzaSyBqB6CgEEbTrE5b2LV_xC4DLOtag9wBPaQ`)
-                .then((res)=>{
-                    console.log(res)
-                    originRef.current.value = res.data.results[2].formatted_address
-                })
-                .catch((err)=>{
-                    console.log(err)
-                })
+          axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=AIzaSyBqB6CgEEbTrE5b2LV_xC4DLOtag9wBPaQ`)
+            .then((res)=>{
+                console.log(res)
+                originRef.current.value = res.data.results[2].formatted_address
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
         })
     }
 
@@ -999,33 +990,35 @@ const MapInMobile = () => {
                     {/* End Pay With Wallet */}
 
                     {/* Start Pay With Cash */}
-                    <div
-                      onClick={() => handleChoosePaymentMethod("cash")}
-                      className={`px-2 bg-[#02BF0208] border ${
-                        methodPay == "cash"
-                          ? "border-mobileMain "
-                          : "border-transparent"
-                      }  hover:border-[#02bf02] duration-200 rounded-md cursor-pointer`}
-                    >
-                      <div className="flex items-center gap-4 py-2">
-                        <span>
-                          <img
-                            src="pay/cash.png"
-                            alt="pay with visa In Kiro Travel"
-                          />
-                        </span>
-                        <div>
-                          <p>Cash</p>
+                    {typeTime == "appointment" && 
+                      <div
+                        onClick={() => handleChoosePaymentMethod("cash")}
+                        className={`px-2 bg-[#02BF0208] border ${
+                          methodPay == "cash"
+                            ? "border-mobileMain "
+                            : "border-transparent"
+                        }  hover:border-[#02bf02] duration-200 rounded-md cursor-pointer`}
+                      >
+                        <div className="flex items-center gap-4 py-2">
+                          <span>
+                            <img
+                              src="pay/cash.png"
+                              alt="pay with visa In Kiro Travel"
+                            />
+                          </span>
+                          <div>
+                            <p>Cash</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    }
                     {/* End Pay With Cash */}
                     {/* Button Submit  */}
                     <div className="w-[90%] m-auto">
                       <button
                         type="submit"
                         disabled={verfiyLoading}
-                        className="bg-[#02bf02] mt-4 w-full py-2 text-white rounded-md"
+                        className="bg-[#02bf02] mt-4 w-full py-2 min-h-[40px] text-white rounded-md flex items-center justify-center"
                       >
                         {verfiyLoading ? (
                           <Loading width="20px" height="20px" />

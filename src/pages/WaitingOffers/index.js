@@ -2,7 +2,6 @@
 import Container from "@/components/globalComponents/Container";
 import Loading from "@/components/globalComponents/Loading";
 import { DriverCard } from "@/components/pwa/DriversRequests";
-import { UserData } from "@/context/userContext";
 import AxiosInstance from "@/helper/AxiosInstance";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,7 +15,6 @@ const Index = () => {
   const [loadingState, SetLoadingState] = useState(true);
   const [dataOffers, setDataOffers] = useState([]);
   const [shouldReloadData, setShouldReloadData] = useState(false);
-  const { data } = useContext(UserData);
 
   useEffect(() => {
     const payIntent = localStorage.getItem("visapay")
@@ -34,6 +32,7 @@ const Index = () => {
           // console.log(error)
         }
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -72,23 +71,30 @@ const Index = () => {
 
   return (
     <>
-      <div
-        onClick={() => router.push("/")}
-        className="bg-[#EEE] z-40 text-xl p-[6px] rounded-md flex sm:hidden cursor-pointer items-center justify-center fixed top-4 left-4"
-      >
-        <img src="offers/arrow.png" alt="reload Offers Kiro Travel" />
+      {/* header */}
+      <div className="z-40 flex sm:hidden items-center justify-between sticky top-0 w-full p-4 bg-white">
+        <div
+          onClick={() => router.push("/")}
+          className="bg-[#EEE] p-[6px] text-xl rounded-md flex sm:hidden cursor-pointer items-center justify-center"
+        >
+          <img src="offers/arrow.png" alt="reload Offers Kiro Travel" />
+        </div>
+
+        <h3 className="z-40 text-lg w-fit font-medium text-center sm:hidden ">
+          Waiting Offers
+        </h3>
+
+        <div
+          onClick={handleReloadClick}
+          className="bg-[#EEE] p-[6px] text-xl rounded-md flex sm:hidden cursor-pointer items-center justify-center"
+        >
+          <img src="offers/reload.png" alt="reload Offers Kiro Travel" />
+        </div>
       </div>
 
-      <div
-        onClick={handleReloadClick}
-        className="bg-[#EEE] z-40 text-xl p-[6px] rounded-md flex sm:hidden cursor-pointer items-center justify-center fixed top-4 right-4"
-      >
-        <img src="offers/reload.png" alt="reload Offers Kiro Travel" />
-      </div>
-
-      <div className="mt-16 overflow-y-auto h-[550px]">
+      <div className="pt-2 overflow-y-auto h-[calc(100vh-68px)]">
         {dataOffers?.length > 0 && (
-          <Container>
+          <Container className="flex flex-col gap-4 pb-4">
             {dataOffers.map((item, index) => (
               <DriverCard
                 key={index}
@@ -102,7 +108,7 @@ const Index = () => {
         )}
 
         {!loadingState && dataOffers?.length == 0 && (
-          <Container className="h-screen max-h-screen flex flex-col justify-center items-center gap-y-6">
+          <Container className="h-full max-h-screen flex flex-col justify-center items-center gap-y-6">
             <Image
               alt="Ebace taxi Ebace cab Taxi palexpo TAXI01630"
               src="/notFound.gif"
@@ -110,7 +116,7 @@ const Index = () => {
               height={100}
               className="object-contain w-[80%]"
             />
-            <h3 className="font-bold text-lg">
+            <h3 className="font-bold text-lg text-center">
               Sorry Not Found Any Offers yet
             </h3>
             <Link

@@ -127,16 +127,19 @@ const Login = ({
           swapBetween === 1 ? `${contentClassName} block` : "hidden"
         } text-center px-4 pt-3 pb-3 `}
       >
-        <div className="flex flex-col items-center justify-center gap-5 w-36 sm:w-40 mx-auto mb-3">
+        <div className="hidden md:flex flex-col items-center justify-center gap-5 w-36 sm:w-40 mx-auto mb-3">
           <img src="/louckedd.gif" alt={"Parking Geneve Geneva parking"} />
         </div>
+        <div className="md:hidden flex flex-col items-center justify-center gap-5 w-36 sm:w-40 mx-auto mb-3">
+          <img src="/loucked.gif" alt={"Parking Geneve Geneva parking"} />
+        </div>
         <div className="mb-14">
-          <p className="text-main text-[13px] sm:text-[20px] font-[600] mb-3">
+          <p className="text-mobileMain md:text-main text-[13px] sm:text-[20px] font-[600] mb-3">
             For Your better experience
           </p>
           <p className="text-[#1E1E1E] text-[13px] sm:text-[20px] font-[700] mb-3">
             Welcome To{" "}
-            <span className="text-main text-[20px] font-[700]">
+            <span className="text-mobileMain md:text-main text-[20px] font-[700]">
               KIRO TRAVEL
             </span>
           </p>

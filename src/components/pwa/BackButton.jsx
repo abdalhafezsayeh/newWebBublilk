@@ -20,4 +20,4 @@ function BackButton({onClick}) {
   );
 }
 
-export default BackButton;
+export default React.memo(BackButton);
