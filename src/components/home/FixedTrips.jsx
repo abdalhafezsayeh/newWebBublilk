@@ -64,12 +64,13 @@ function FixedTrips() {
             {citiesData.length > 0 && citiesData.map((item , index)=>(
               <span
                 key={index}
+                title={item?.name}
                 onClick={() => setActiveCity(item?.name)}
                 className={`relative ${
                   activeCity === item?.name
                     ? "-bottom-[1px] border-main text-main animate__animated animate__pulse"
                     : "border-transparent"
-                } capitalize rounded-t-md duration-100 border-t-[1px] border-r-[1px] border-l-[1px] cursor-pointer bg-white w-32 text-center h-12 leading-[44px]`}
+                } truncate px-2 capitalize rounded-t-md duration-100 border-t-[1px] border-r-[1px] border-l-[1px] cursor-pointer bg-white w-36 text-center h-12 leading-[44px]`}
               >
                 {item?.name}
               </span>
@@ -112,11 +113,12 @@ function FixedTrips() {
                     <span title={item?.to_location} className="capitalize truncate font-bold text-xl tracking-wider">
                       {item?.to_location}
                     </span>
+                    <span className="font-normal text-sm">Fixed Price From</span>
                     <span className="text-lg font-bold capitalize tracking-widest">
-                      <span className="font-normal text-sm">From</span> {item?.price}€
+                      {item?.price}€
                     </span>
                     <span className="font-normal capitalize">
-                      {item?.round_trip ? "Round Trip" : "On way/Economy"}
+                      {item?.round_trip ? "Round Trip" : "On way"}
                     </span>
                     <span className="">
                       <button className="w-[140px] h-[35px] bg-secondary rounded-2xl font-normal tracking-wider border border-secondary hover:bg-transparent duration-300">

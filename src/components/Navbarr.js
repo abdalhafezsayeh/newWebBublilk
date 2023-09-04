@@ -195,6 +195,7 @@ const Navbarr = () => {
                   <li
                     onClick={() => setShowModalLogin(true)}
                     className="lg:hidden block"
+                    title="Login"
                   >
                     <span className="cursor-pointer py-2 lg:py-0 px-2  duration-100 hover:text-secondary">
                       <AiOutlineLogin size={25} />
@@ -203,6 +204,7 @@ const Navbarr = () => {
                   <li
                     onClick={() => handleCloseMdalSignUp(true)}
                     className="lg:hidden block"
+                    title="Sign Up"
                   >
                     <span className="cursor-pointer py-2 lg:py-0 px-2  duration-100 hover:text-secondary">
                       <MdAppRegistration size={25} />
@@ -565,6 +567,7 @@ const Navbarr = () => {
                   <li
                     onClick={() => setShowModalLogin(true)}
                     className="hidden lg:block"
+                    title="Login"
                   >
                     <span className="cursor-pointer py-2 lg:py-0 px-2 text-black duration-100 hover:text-secondary">
                       <AiOutlineLogin size={20} />
@@ -573,6 +576,7 @@ const Navbarr = () => {
                   <li
                     onClick={() => handleCloseMdalSignUp(true)}
                     className="hidden lg:block"
+                    title="Sign Up"
                   >
                     <span className="cursor-pointer py-2 text-black lg:py-0 px-2  duration-100 hover:text-secondary">
                       <MdAppRegistration size={20} />
